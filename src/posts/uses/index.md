@@ -3,6 +3,7 @@ icon: 💻
 title: What Tech I Use
 description: Inspired by uses.tech, here is my current development setup and miscellaneous tools I use on a regular basis.
 permalink: uses/index.html
+#permalink: "posts/{{ page.date | date: '%Y/%m/%d' }}/{{ title | slug }}.html"
 date: 2020-10-27
 tags:
   - posts
