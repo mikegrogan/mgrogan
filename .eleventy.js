@@ -64,7 +64,6 @@ module.exports = function(eleventyConfig) {
     lineSeparator: "\n",
   });
 
-
   return {
     dir: { input: 'src', output: 'dist' },
     htmlTemplateEngine: 'njk',
