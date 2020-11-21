@@ -18,7 +18,7 @@ jobs:
       - name: Build Eleventy
         uses: TartanLlama/actions-eleventy@master
         with:
-          args: --output dist
+          args: --output static
           install_dependencies: true
 
       # Copying files and artifacts via SSH
