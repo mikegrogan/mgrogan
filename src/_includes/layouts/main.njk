@@ -1,0 +1,58 @@
+---
+title: Mike Grogan | Full Stack Developer
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+  <!-- <link rel="stylesheet" href="javascript/lightslider/dist/css/lightslider.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/swiper@6.0.0/swiper-bundle.min.css"> -->
+  <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css">
+  <!-- <link rel="stylesheet" href="javascript/lightGallery/dist/css/lightgallery.min.css"> -->
+  <link type="text/css" rel="stylesheet" href="/assets/javascript/lightgallery.js/dist/css/lightgallery.min.css" /> 
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/rss+xml" title="Subscribe to Mike Grogan Blog" href="/feed.xml" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79835-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-79835-1');
+  </script>
+
+</head>
+<body>
+
+  {% include "partials/header.njk" %}
+
+  {{ content | safe }}
+
+  {% include "partials/footer.njk" %}
+
+  <script src="/assets/javascript/swiper-bundle.min.js"></script>
+  <script src="/assets/javascript/lightgallery.js/dist/js/lightgallery.min.js"></script>
+  <script src="/assets/javascript/main.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
+
+</body>
+</html>

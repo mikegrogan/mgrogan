@@ -1,0 +1,52 @@
+---
+layout: layouts/centered.njk
+pagination:
+  data: collections.posts
+  size: 10
+  reverse: true
+  alias: posts
+---
+
+<h1>Recent Blog Posts</h1>
+
+<section>
+{% for post in posts %}
+  <article>
+    <h3>
+      {{ post.data.icon }} <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+    </h3>
+    <time datetime="{{ post.date | dateIso }}">{{ post.date | dateBlogPost }}</time>
+    <p>{{ post.data.description }}</p>
+  </article>
+{% endfor %}
+</section>
+
+{# <nav aria-labelledby="my-pagination">
+  <h2 id="my-pagination">This is my Pagination</h2>
+  <ol>
+    <li>{% if page.url != pagination.href.first %}<a href="{{ pagination.href.first }}">First</a>{% else %}First{% endif %}</li>
+    <li>{% if pagination.href.previous %}<a href="{{ pagination.href.previous }}">Previous</a>{% else %}Previous{% endif %}</li>
+{%- for pageEntry in pagination.pages %}
+    <li><a href="{{ pagination.hrefs[ loop.index0 ] }}"{% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>Page {{ loop.index }}</a></li>
+{%- endfor %}
+    <li>{% if pagination.href.next %}<a href="{{ pagination.href.next }}">Next</a>{% else %}Next{% endif %}</li>
+    <li>{% if page.url != pagination.href.last %}<a href="{{ pagination.href.last }}">Last</a>{% else %}Last{% endif %}</li>
+  </ol>
+</nav> #}
+
+
+<nav id="pagination">
+
+{% if pagination.href.previous %}
+<div>
+<a href="{{ pagination.href.previous }}">&#8672; Newer Posts</a>
+</div>
+{% endif %}
+
+
+{% if pagination.href.next %}
+<div>
+<a href="{{ pagination.href.next }}">Older Posts &#8674;</a>
+</div>
+{% endif %}
+</div>

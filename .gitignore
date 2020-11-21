@@ -1,0 +1,9 @@
+# Build results
+dist/
+
+# Visual Studio
+.vscode/
+
+# Package managers
+node_modules/
+.npm
