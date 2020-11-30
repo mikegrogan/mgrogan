@@ -18,7 +18,7 @@ layout: layouts/centered.njk
 
 The following is my current web development setup and things that I use in my day to day life. It is inspired from Wes Bos's <a href="http://uses.tech" target="_blank">Uses.Tech</a> page. Hopefully there's a few interesting things in there for anyone checking out the list.
 
-### Design and Development
+## Design and Development
 * [**Visual Studio Code**][1] has been my go to editor for years now. These are the main extensions/theme I use:
   * Solarized Dark
   * CFML
@@ -33,18 +33,18 @@ The following is my current web development setup and things that I use in my da
 * [**Toad for Oracle**][9] is the best tool I've found for working with Oracle databases.
 * [**Google Cloud free tier**][6] is what I used to setup this site running on Ubuntu. It doesn't have a monthly cost associated with it, which is great for a small site like this. I just have to maintain the domain.
 
-### Desktop Apps, Plugins, Tools
+## Desktop Apps, Plugins, Tools
 * [**Powertoys**][3] I use mostly for the FanyZones feature.
 * [**Vivaldi**][7] is built on Chromium, but goes the extra mile with lots of great extra features. Helps me de-google a little bit as well.
 * [**KeepassXC**][10] My choice for a personal password manager.
 * [**TeraCopy**][11] Provides a little more control when copying files.
 * [**Chocolatey**][12] I use to manage my installed software and keep everything up to date.
 
-### Camera Gear
+## Camera Gear
 * **Canon 6d** is definitely little outdated now. As a side hustle I shot a few weddings with it and thought it performed well. It's decent for photos, but wouldn't recommend it for video.
 * [**Sigma 70-200mm F2.8 DG OS HSM**][16] has been a great portrait lens for me, and is considerably cheaper than the Canon equivalent.
 
-### Home Network
+## Home Network
 * Raspberry Pi running [**PiHole**][13] to block ads. Have to make use of the Pi somehow!
 * [**MikroTik hAP ac2 router**][14] gave me the best bang for my buck when searching for a new router. It has the powerful [RouterOS ][15] running on it that let me do things like setting up a VPN, creating multiple subnets, or automating backups.
 * Ran Cat 6 throughout my house to get the best possible connection.

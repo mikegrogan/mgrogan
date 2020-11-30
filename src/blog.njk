@@ -12,9 +12,9 @@ pagination:
 <section>
 {% for post in posts %}
   <article>
-    <h3>
+    <h2>
       {{ post.data.icon }} <a href="{{ post.url | url }}">{{ post.data.title }}</a>
-    </h3>
+    </h2>
     <time datetime="{{ post.date | dateIso }}">{{ post.date | dateBlogPost }}</time>
     <p>{{ post.data.description }}</p>
   </article>
