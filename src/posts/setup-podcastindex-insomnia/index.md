@@ -1,6 +1,6 @@
 ---
 icon: 🔉
-title: Setup up the Podcast Index API in Insomnia
+title: Setup the Podcast Index API in Insomnia
 description: A quick help guide on how to setup Insomnia to pull in REST endpoints using the Podcast Index API as an example.
 # permalink: "posts/{{ page.date | date: '%Y' }}/{{ title | slug }}/"
 date: 2020-11-29
