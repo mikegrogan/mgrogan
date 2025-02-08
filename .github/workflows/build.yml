@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: ['lts/*']  # Use the latest LTS Node.js
+        node-version: ['lts/*']
 
     steps:
       - uses: actions/checkout@v3
@@ -26,43 +26,52 @@ jobs:
 
       - run: npx @11ty/eleventy --output static
 
-      # Step 1: Verify DNS resolution of your remote host
+      # Step 1: Show the runner's public IP
+      - name: Show runner public IP
+        run: curl ifconfig.me
+
+      # Step 2: Check DNS resolution
       - name: Check DNS resolution
         run: |
           nslookup ${{ secrets.REMOTE_HOST }}
           dig ${{ secrets.REMOTE_HOST }}
 
-      # Step 2: Test connectivity using netcat (nc)
-      - name: Test connectivity to server (port 22) using nc
+      # Step 3: Test connectivity to server (port 22) using netcat
+      - name: Test connectivity to server (port 22) using netcat
         run: |
           sudo apt-get update
           sudo apt-get install -y netcat-openbsd
           nc -zv ${{ secrets.REMOTE_HOST }} 22
 
-      # Step 3: Test connectivity using telnet
+      # Step 4: Test connectivity to server (port 22) using telnet
       - name: Test connectivity to server (port 22) using telnet
         run: |
           sudo apt-get update
           sudo apt-get install -y telnet
           telnet ${{ secrets.REMOTE_HOST }} 22 || echo "Telnet failed to connect."
 
-      # Step 4: Test SSH connection using the provided key
+      # Step 5: Run traceroute to identify routing issues
+      - name: Run traceroute to server (port 22)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y traceroute
+          traceroute ${{ secrets.REMOTE_HOST }}
+
+      # Step 6: Test SSH connection using the provided key
       - name: Test SSH connection
         run: |
-          # Write the SSH key to a temporary file
           echo "${{ secrets.SSH_KEY }}" > private_key
           chmod 600 private_key
-          # Try connecting via SSH; disable strict host key checking to avoid prompts
           ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
 
-      # Final step: Proceed with file copy if previous steps succeed
+      # Step 7: Finally, perform the SCP file copy
       - name: Copying files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}  # Only needed if your key has a passphrase
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
           rm: true
           source: "static/"
           target: "${{ secrets.REMOTE_DIR }}"
