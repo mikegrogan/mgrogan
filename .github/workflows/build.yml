@@ -30,7 +30,7 @@ jobs:
       - name: Test connectivity to server (port 22)
         run: |
           sudo apt-get update
-          sudo apt-get install -y netcat
+          sudo apt-get install -y netcat-openbsd
           nc -zv ${{ secrets.REMOTE_HOST }} 22
 
       # Test SSH connection using the provided key
@@ -41,7 +41,7 @@ jobs:
           chmod 600 private_key
           # Try connecting via SSH; disable strict host key checking to avoid prompts
           ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
-      
+
       # Proceed with file copy if the tests succeed
       - name: Copying files to server
         uses: appleboy/scp-action@master
