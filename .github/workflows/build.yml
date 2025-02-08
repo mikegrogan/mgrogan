@@ -36,35 +36,38 @@ jobs:
           nslookup ${{ secrets.REMOTE_HOST }}
           dig ${{ secrets.REMOTE_HOST }}
 
-      # Step 4: Test connectivity to server (port 22) using telnet
+      # Step 3: Test connectivity to server (port 22) using telnet
       - name: Test connectivity to server (port 22) using telnet
         run: |
           sudo apt-get update
           sudo apt-get install -y telnet
           telnet ${{ secrets.REMOTE_HOST }} 22 || echo "Telnet failed to connect."
 
-      # Step 5: Run traceroute to identify routing issues
+      # Step 4: Run traceroute to identify routing issues
       - name: Run traceroute to server (port 22)
         run: |
           sudo apt-get update
           sudo apt-get install -y traceroute
           traceroute ${{ secrets.REMOTE_HOST }}
 
-      # Step 6: Test SSH connection using the provided key
+      # Step 5: Test SSH connection using appleboy/ssh-action
       - name: Test SSH connection
-        run: |
-          echo "${{ secrets.SSH_KEY }}" > private_key
-          chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          script: echo 'SSH connection successful'
 
-      # Step 3: Test connectivity to server (port 22) using netcat
+      # Step 6: Test connectivity to server (port 22) using netcat
       - name: Test connectivity to server (port 22) using netcat
         run: |
           sudo apt-get update
           sudo apt-get install -y netcat-openbsd
-          nc -zv ${{ secrets.REMOTE_HOST }} 22        
+          nc -zv ${{ secrets.REMOTE_HOST }} 22
 
-      # Step 7: Finally, perform the SCP file copy
+      # Step 7: Copying files to server
       - name: Copying files to server
         uses: appleboy/scp-action@master
         with:
