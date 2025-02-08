@@ -27,49 +27,45 @@ jobs:
       - run: npx @11ty/eleventy --output static
 
       # Step 1: Show the runner's public IP
-      - name: Show runner public IP
-        run: curl ifconfig.me
-
-      # Step 1: Show the runner's public IP
-      - name: Show remote directory
-        run: echo ${{ secrets.REMOTE_DIR }}
+      # - name: Show runner public IP
+      #   run: curl ifconfig.me
 
       # Step 2: Check DNS resolution
-      - name: Check DNS resolution
-        run: |
-          nslookup ${{ secrets.REMOTE_HOST }}
-          dig ${{ secrets.REMOTE_HOST }}
+      # - name: Check DNS resolution
+      #   run: |
+      #     nslookup ${{ secrets.REMOTE_HOST }}
+      #     dig ${{ secrets.REMOTE_HOST }}
 
       # Step 3: Test connectivity to server (port 22) using telnet
-      - name: Test connectivity to server (port 22) using telnet
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y telnet
-          telnet ${{ secrets.REMOTE_HOST }} 22 || echo "Telnet failed to connect."
+      # - name: Test connectivity to server (port 22) using telnet
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y telnet
+      #     telnet ${{ secrets.REMOTE_HOST }} 22 || echo "Telnet failed to connect."
 
       # Step 4: Run traceroute to identify routing issues
-      - name: Run traceroute to server (port 22)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y traceroute
-          traceroute ${{ secrets.REMOTE_HOST }}
+      # - name: Run traceroute to server (port 22)
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y traceroute
+      #     traceroute ${{ secrets.REMOTE_HOST }}
 
       # Step 5: Test SSH connection using appleboy/ssh-action
-      - name: Test SSH connection
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          script: echo 'SSH connection successful'
+      # - name: Test SSH connection
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.REMOTE_HOST }}
+      #     username: ${{ secrets.REMOTE_USER }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+      #     script: echo 'SSH connection successful'
 
       # Step 6: Test connectivity to server (port 22) using netcat
-      - name: Test connectivity to server (port 22) using netcat
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y netcat-openbsd
-          nc -zv ${{ secrets.REMOTE_HOST }} 22
+      # - name: Test connectivity to server (port 22) using netcat
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y netcat-openbsd
+      #     nc -zv ${{ secrets.REMOTE_HOST }} 22
 
       # Step 7: Copying files to server
       - name: Copying files to server
