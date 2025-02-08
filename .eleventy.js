@@ -68,10 +68,6 @@ module.exports = function (eleventyConfig) {
   return {
     dir: { input: 'src', output: 'dist' },
     htmlTemplateEngine: 'njk',
-    passthroughFileCopy: true,
-    serverOptions: {
-      port: 9000,
-      watch: true // Optional: Enable live reloading
-    }
+    passthroughFileCopy: true
   };
 };
