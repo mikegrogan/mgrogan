@@ -26,8 +26,13 @@ jobs:
       - name: Test SSH Connection (Detailed)
         run: |
           ssh-keyscan ${{ secrets.REMOTE_HOST }} >> known_hosts
-          echo "${{ secrets.SSH_KEY }}" > private_key.pem
+          echo "${{ secrets.SSH_KEY }}" | tr -d '\r' > private_key.pem # Remove CRLF (just in case)
           chmod 600 private_key.pem
+          # Convert to OpenSSH format (if needed)
+          if [[ $(head -n 1 private_key.pem | grep "BEGIN RSA PRIVATE KEY") ]]; then # Check if it's an RSA key
+            ssh-keygen -p -m PEM -f private_key.pem > private_key_openssh.pem
+            mv private_key_openssh.pem private_key.pem
+          fi
           ssh -o StrictHostKeyChecking=no -o ForwardAgent=no -o UserKnownHostsFile=/dev/null -i private_key.pem ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} 'echo "SSH connection test successful!"'
           rm private_key.pem
 
