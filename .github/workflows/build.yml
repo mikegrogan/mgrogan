@@ -10,18 +10,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:  # Specify Node.js version
+    strategy:
       matrix:
-        node-version: [18] # Or lts/* for latest LTS
+        node-version: ['lts/*'] # Use latest LTS Node.js
 
     steps:
-      - uses: actions/checkout@v3 # Updated to v3
-      - uses: actions/setup-node@v3 # Use setup-node
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm' # Cache node_modules (highly recommended)
-      - run: npm install # Install dependencies
-      - run: npx @11ty/eleventy --output static # Build Eleventy (explicit output dir)
+          cache: 'npm'
+      - run: npm install
+      - run: npx @11ty/eleventy --output static
+
+      - name: Test SSH Connection (Optional, for debugging)
+        run: |
+          ssh-keyscan ${{ secrets.REMOTE_HOST }} >> known_hosts
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} 'echo "SSH connection test successful!"'
 
       - name: Copying files to server
         uses: appleboy/scp-action@master
@@ -29,7 +34,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }} # If you use one
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }} # Only if your key has a passphrase
           rm: true
-          source: "static/" # Correct path
+          source: "static/"
           target: "${{ secrets.REMOTE_DIR }}"
