@@ -36,13 +36,6 @@ jobs:
           nslookup ${{ secrets.REMOTE_HOST }}
           dig ${{ secrets.REMOTE_HOST }}
 
-      # Step 3: Test connectivity to server (port 22) using netcat
-      - name: Test connectivity to server (port 22) using netcat
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y netcat-openbsd
-          nc -zv ${{ secrets.REMOTE_HOST }} 22
-
       # Step 4: Test connectivity to server (port 22) using telnet
       - name: Test connectivity to server (port 22) using telnet
         run: |
@@ -63,6 +56,13 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > private_key
           chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
+
+      # Step 3: Test connectivity to server (port 22) using netcat
+      - name: Test connectivity to server (port 22) using netcat
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y netcat-openbsd
+          nc -zv ${{ secrets.REMOTE_HOST }} 22        
 
       # Step 7: Finally, perform the SCP file copy
       - name: Copying files to server
