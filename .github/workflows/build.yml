@@ -30,6 +30,10 @@ jobs:
       - name: Show runner public IP
         run: curl ifconfig.me
 
+      # Step 1: Show the runner's public IP
+      - name: Show remote directory
+        run: echo ${{ secrets.REMOTE_DIR }}
+
       # Step 2: Check DNS resolution
       - name: Check DNS resolution
         run: |
