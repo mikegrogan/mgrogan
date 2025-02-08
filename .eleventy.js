@@ -5,7 +5,7 @@ const htmlmin = require("html-minifier");
 
 moment.locale('en');
 
-module.exports = function(eleventyConfig) {
+module.exports = function (eleventyConfig) {
   // Pass-through files
   eleventyConfig.addPassthroughCopy('src/favicon.ico');
   eleventyConfig.addPassthroughCopy('src/robots.txt');
@@ -14,8 +14,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/assets/javascript');
   eleventyConfig.addPassthroughCopy('src/assets/css');
 
-  eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
-    if( outputPath.endsWith(".html") ) {
+  eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
+    if (outputPath.endsWith(".html")) {
       let minified = htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,
@@ -29,7 +29,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('dateIso', date => {
     return moment(date).toISOString();
   });
- 
+
   eleventyConfig.addFilter('dateReadable', date => {
     return moment(date).utc().format('LL'); // E.g. May 31, 2019
   });
@@ -48,7 +48,7 @@ module.exports = function(eleventyConfig) {
     // templateFormats: ["njk", "md"],
 
     // init callback lets you customize Prism
-    init: function({ Prism }) {
+    init: function ({ Prism }) {
       // Prism.languages.myCustomLanguage = /* */;
     },
 
@@ -59,7 +59,7 @@ module.exports = function(eleventyConfig) {
     // Added in 3.0.2, set to false to opt-out of pre-highlight removal of leading
     // and trailing whitespace
     trim: true,
-    
+
     // Added in 3.0.4, change the separator between lines (you may want "\n") default <br>
     lineSeparator: "\n",
 
@@ -68,6 +68,10 @@ module.exports = function(eleventyConfig) {
   return {
     dir: { input: 'src', output: 'dist' },
     htmlTemplateEngine: 'njk',
-    passthroughFileCopy: true
+    passthroughFileCopy: true,
+    serverOptions: {
+      port: 9000,
+      watch: true // Optional: Enable live reloading
+    }
   };
 };
