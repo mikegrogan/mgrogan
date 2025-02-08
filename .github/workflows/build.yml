@@ -9,26 +9,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:  # Specify Node.js version
+      matrix:
+        node-version: [18] # Or lts/* for latest LTS
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, 
-      # so your workflow can access it
-      - uses: actions/checkout@master
-
-      # Build your static website with Eleventy
-      - name: Build Eleventy
-        uses: TartanLlama/actions-eleventy@master
+      - uses: actions/checkout@v3 # Updated to v3
+      - uses: actions/setup-node@v3 # Use setup-node
         with:
-          args: --output static
-          install_dependencies: true
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm' # Cache node_modules (highly recommended)
+      - run: npm install # Install dependencies
+      - run: npx @11ty/eleventy --output static # Build Eleventy (explicit output dir)
 
-      # Copying files and artifacts via SSH
       - name: Copying files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }} # If you use one
           rm: true
-          source: "static/"
+          source: "static/" # Correct path
           target: "${{ secrets.REMOTE_DIR }}"
