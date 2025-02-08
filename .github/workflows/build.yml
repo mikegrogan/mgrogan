@@ -23,10 +23,13 @@ jobs:
       - run: npm install
       - run: npx @11ty/eleventy --output static
 
-      - name: Test SSH Connection (Optional, for debugging)
+      - name: Test SSH Connection (Detailed)
         run: |
           ssh-keyscan ${{ secrets.REMOTE_HOST }} >> known_hosts
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} 'echo "SSH connection test successful!"'
+          echo "${{ secrets.SSH_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -o StrictHostKeyChecking=no -o ForwardAgent=no -o UserKnownHostsFile=/dev/null -i private_key.pem ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} 'echo "SSH connection test successful!"'
+          rm private_key.pem
 
       - name: Copying files to server
         uses: appleboy/scp-action@master
